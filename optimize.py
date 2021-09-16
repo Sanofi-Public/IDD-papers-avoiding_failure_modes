@@ -45,10 +45,6 @@ def fit_clfs(chid, n_estimators, n_jobs, random_seed_0=0, random_seed_1=0, min_s
         assay_file = f'./assays/processed/210415_LIT_PCBA_ALDH1_Best_AB_sets.csv'
         print(f'Reading data from: {assay_file}')
         df = pd.read_csv("210415_LIT_PCBA_ALDH1_Best_AB_sets.csv")
-        df_train, df_test = train_test_split(df, test_size=0.1, random_state=random_seed_0)
-
-
-        df1, df2 = train_test_split(df_train, test_size=0.5, random_state=random_seed_1)
         in_set_A = np.where(df['in_set_A']==1)[0]
         in_set_B = np.where(df['in_set_B']==1)[0]
         smiles = df["SMILES"]
@@ -64,9 +60,6 @@ def fit_clfs(chid, n_estimators, n_jobs, random_seed_0=0, random_seed_1=0, min_s
                 smiles_train.append(smiles[i])
 
         in_test = np.array(index_test)
-
-        #in_test = np.where(df['in_set_A']==0 and df['in_set_B']==0)
-
 
         X1 = np.array(ecfp(smiles[in_set_A]))
         X2 = np.array(ecfp(smiles[in_set_B]))
@@ -197,15 +190,15 @@ def optimize(chid,
 
     # Create guacamol scoring function with clf trained on split 1
     if use_max_score:
-        scoring_function = TPScoringFunction(clfs['Split1'], max_score, [rdMolDescriptors.GetMorganFingerprintAsBitVect(Chem.MolFromSmiles(s), radius=2, nBits=1024) for s in initial_smiles])
+        scoring_function = TPScoringFunction(clfs['Split1'], max_score)
     else:
-        scoring_function = TPScoringFunction(clfs['Split1'], None, [rdMolDescriptors.GetMorganFingerprintAsBitVect(Chem.MolFromSmiles(s), radius=2, nBits=1024) for s in initial_smiles])
-    infer_model = InferenceModel(model_dir='default_model') # The CDDD inference model used to encode/decode molecular SMILES strings to/from the CDDD space. You might need to specify the path to the pretrained model (e.g. default_model)
+        scoring_function = TPScoringFunction(clfs['Split1'], None)
+    infer_model = InferenceModel(model_dir='default_model') 
+    # The CDDD inference model used to encode/decode molecular SMILES strings to/from the CDDD space. You might need to specify the path to the pretrained model (e.g. default_model)
    
     mso_score = [ScoringFunction(func=scoring_function.raw_score_list, name='score', is_mol_func=False, is_smiles_func=True)]
 
-    # from mso.objectives.mol_functions import qed_score
-    # mso_score = [ScoringFunction(func=qed_score,            name="qed", is_mol_func=True)] # wrap the drug likeness score inside a scoring function instance
+
 
     class MsoWrapper(object):
         def __init__(self, init_smiles, smi_file, num_part, num_iter):

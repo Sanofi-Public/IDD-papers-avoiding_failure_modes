@@ -69,12 +69,6 @@ if __name__ == '__main__':
     parser.add_argument("--n_estimators", type=int, help='number of trees to use in the RF', default=100)
 
     args = parser.parse_args()
-
-#    if args.server == args.work:
-#        raise ValueError('Must be server or client only.')
-
-    # Create a search grid and provide access to it on the network
-
     for opt_name in ['mso', 'graph_ga', 'lstm_hc']:
         optimizer_args = opt_args[opt_name]
         if args.random_start and opt_name in ['graph_ga', 'lstm_hc']:
@@ -100,7 +94,7 @@ if __name__ == '__main__':
                 config['log_base'] = args.log_base 
                 config['n_estimators'] = args.n_estimators
 
-                # print(f'Run {i+1}/{args.nruns}, {opt_name}, {chid}')
+                print(f'Run {i+1}/{args.nruns}, {opt_name}, {chid}')
                 optimize(**config)
 
 

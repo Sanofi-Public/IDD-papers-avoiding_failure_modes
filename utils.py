@@ -57,20 +57,9 @@ def score(smiles_list, clf, max_score=None, fps=None):
     i = 0
     for li, x in enumerate(X):
         if x is None:
-            # print(smiles_list[li], Chem.MolFromSmiles(smiles_list[li]), x)
             preds.append(None)
         else:
-            if fps:
-
-                mol = Chem.MolFromSmiles(smiles_list[li])
-                fp = AllChem.GetMorganFingerprintAsBitVect(mol, 4)
-                sim = max([DataStructs.TanimotoSimilarity(query_fp, fp) for query_fp in fps])
-                if sim<0.0:
-                    score = preds_valid[i] * sim/0.5
-                else:
-                    score = preds_valid[i]
-            else:
-                score = preds_valid[i]
+            score = preds_valid[i]
             if max_score:
                 preds.append(min(max_score, score))
             else:
@@ -81,11 +70,10 @@ def score(smiles_list, clf, max_score=None, fps=None):
 
 
 class TPScoringFunction(BatchScoringFunction):
-    def __init__(self, clf, max_score, fps):
+    def __init__(self, clf, max_score):
         super().__init__()
         self.clf = clf
         self.max_score = max_score
-        self.fps = fps
 
     def raw_score_list(self, smiles_list):
-        return score(smiles_list, self.clf, self.max_score, self.fps)
+        return score(smiles_list, self.clf, self.max_score)
