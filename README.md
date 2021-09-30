@@ -16,14 +16,10 @@ The instructions for installation are the same as described in https://github.co
 
 ### Install dependencies
 ```
-pip install -r requirements.txt
-conda install rdkit -c rdkit
+conda env create -f environment.yml
+conda activate failure_modes
 ```
-Install cddd by following the instructions on https://github.com/jrwnter/cddd
-and download pretrained model
-```
-wget https://raw.githubusercontent.com/jrwnter/cddd/master/download_default_model.sh -O- -q | bash
-```
+
 ### Download Guacamol data splits
 The compounds are used for distribution learning and for starting populations for the graph-based genetic algorithm.
 ```
