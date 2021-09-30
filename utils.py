@@ -10,6 +10,20 @@ from rdkit.Chem import AllChem
 from sklearn.metrics import roc_auc_score
 from rdkit import DataStructs
 
+sub = ['(Cl)', '(OC)', '(Cl)', '(N(C)C)', '(O)', '(N)', '(C)', '([N+](=O)[O-])', '(C#N)', '(C(C)=O)', '(C(N)=O)', '(S(N)(=O)=O)', '(S(C)(=O)=O)', '(C(C)(C)C)', '(C(F)(F)F)', '(Br)', '(I)']
+
+def topliss_walk(smiles, n_combinations=2):
+    mols = [smiles]
+    for step in range(n_combinations):
+        new_mols = []
+        for mol in mols: 
+            positions = [m.start() for m in re.finditer('c', mol)]
+            for p in positions:
+                for s in sub:
+                    if Chem.MolFromSmiles(mol[:p] + s + mol[p:]):
+                        new_mols.append(mol[:p] + s + mol[p:])
+        mols.extend(new_mols)
+    return mols
 
 def timestamp(adduuid=False):
     s = strftime("%Y-%m-%d_%H:%M:%S", gmtime())
