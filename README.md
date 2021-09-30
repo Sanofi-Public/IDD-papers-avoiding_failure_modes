@@ -1,28 +1,19 @@
-# On failure modes of molecule generators and optimizers
-Philipp Renz <sup>a</sup>,
-Dries Van Rompaey  <sup>b</sup>,
-Jörg Kurt Wegner  <sup>b</sup>,
-Sepp Hochreiter  <sup>a</sup>,
-Günter Klambauer  <sup>a</sup>,
+# Explaining and avoiding failures modes in goal-directed generation
 
-<sup>a</sup> LIT AI Lab & Institute for Machine Learning, Johannes Kepler University Linz,Altenberger Strasse 69, A-4040 Linz, Austria
-<sup>b</sup> High Dimensional Biology and Discovery Data Sciences, Janssen Research & Development, Janssen Pharmaceutica N.V., Turnhoutseweg 30, Beerse B-2340, Belgium
+This code reproduces the results found in the paper "Explaining and avoiding failures modes in goal-directed generation".
+The paper builds on the work of Renz and al <sup>1</sup>, that is available at: https://www.sciencedirect.com/science/article/pii/S1740674920300159
 
-The paper can be found here:
-https://www.sciencedirect.com/science/article/pii/S1740674920300159
+This code is a fork from the repository supporting <sup>1</sup>. This code is available at: https://github.com/ml-jku/mgenerators-failure-modes. The main difference with the original codebase is new notebooks supporting our experiments.
 
-Feel free to send questions to renz@ml.jku.at.
-## TLDR:
-The main points of the paper are:
-- By just making tiny changes to training set molecules we get high
-  scores on the [Guacamol benchmark](https://pubs.acs.org/doi/10.1021/acs.jcim.8b00839) and beat all models except an LSTM. This relies on
-  the fact that the novelty metric is rather permissive.
-- Molecular optimizers are often used to find samples that scored highly
-  by machine learning models. We show that these high scores can overfit
-  to the scoring model.
+We thank the authors of <sup>1</sup> both for their very insightful work, and their well-written and reproducible codebase. 
+
+<sup>1</sup> https://doi.org/10.1016/j.ddtec.2020.09.003 
+
+
 
 ## Code
-Steps to reproduce the paper:
+The instructions for installation are the same as described in https://github.com/ml-jku/mgenerators-failure-modes.
+
 ### Install dependencies
 ```
 pip install -r requirements.txt
@@ -47,14 +38,24 @@ The csv-files downloaded from ChEMBL are located in `assays/raw`.
 Running the `preprocess.py` script will transform the data into binary classification tasks and store them in `assays/processed`.
 
 ## Experiments
-For the distribution-learning experiment (AddCarbon model) is suffices to run `addcarbon.py`
 
-For the goal-directed generation benchmarks more steps have to be taken.
-1. `preprocess.py`: Preprocess the data to obtain binary classification tasks.
-1. `run_goal_directed.py`: This runs all the molecular optimization experiments.
-1. `predictions.py`: This fits  a classifier multiple times with different random seeds, mainly to estimate the optimization/control score combinations of split 1 actives. The results are used to get the contours in the scatter plots (Fig. 2, S1)
-1. `plots.ipynb`: Notebook to create most of the plots in the paper
-1. `nearest_neighbours.ipynb`: Notebook to calculate nearest neighbour distances and to create Fig. S4 (histograms over Tanimoto similarities)
 
-## Special thanks
-Special thanks goes out to the authors of Guacamol ([Paper](https://pubs.acs.org/doi/10.1021/acs.jcim.8b00839) / [Github](https://github.com/BenevolentAI/guacamol)). Their code was very helpful in implementing our experiments.
+1. To reproduce the original results presented in "On failure modes in molecule generation and optimization":
+```
+python run_goal_directed.py --log_base results/original_start_chembl --nruns 10 --random_start 
+```
+
+2. To run the same analysis while using the dataset as a starting point:
+```
+python run_goal_directed.py --log_base results/original_start_dataset --nruns 10
+```
+
+3. To run the experiments on the ALDH1 dataset and the JAK2 dataset with modified parameters for the predictive model:
+```
+python run_goal_directed.py --log_base results/new_datasets_start_from_chembl --nruns 10 --random_start --chids_set alternative --n_estimators 200 --min_samples_leaf 3
+```
+4. `dataset_analysis.ipynb`: Analysis of the relationships between optimization and control scores on the distribution of the dataset.
+5. `run_analysis.ipynb`: Analysis of the experiment on the new datasets (ALDH1 and JAK2 modified).
+5. `tolerance_intervals.ipynb`: Computes tolerance intervals for expected control scores, and plot them alongside actual control scores obtained during the experiments.
+6. `nn_analysis.ipynb`: Analyze whether there is already a bias towards higher similarities with molecules from Split 1 for high scoring molecules in the dataset. 
+7. `display_molecules.ipynb`: shows outliers from the DRD2 dataset, and molecules generated during the different experiments. 
