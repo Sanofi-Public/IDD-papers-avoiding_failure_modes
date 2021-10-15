@@ -16,10 +16,10 @@ Renz *and al* highlighted that in goal-directed generation, molecules generated 
 ![plot](readme_figures/median_scores.png)
 
 To explain those results, we looked at the agreement between optimization model and control models on the initial data distribution:
-![plot](readme_figures/original_datasets_analysis.png)
+![plot](readme_figures/dataset_analysis.PNG)
 
 We then assess whether this initial difference could explain the previous results:
-![plot](readme_figures/median_scores_start_dataset_data_control.png)
+![plot](readme_figures/tolerance_intervals_data_control.PNG)
 
 
 ## Code
