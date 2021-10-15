@@ -1,4 +1,0 @@
-name: failure_modes
-channels:
-  - defaults
-prefix: /opt/local/anaconda3/envs/failure_modes

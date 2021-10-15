@@ -2,7 +2,7 @@ import uuid
 from functools import partial
 from multiprocessing import Pool
 from time import gmtime, strftime
-
+import re
 import numpy as np
 from guacamol.scoring_function import BatchScoringFunction
 from rdkit import Chem
