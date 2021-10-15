@@ -13,19 +13,13 @@ We thank the authors of <sup>1</sup> both for their very insightful work, and th
 
 Renz *and al* highlighted that in goal-directed generation, molecules generated can have high optimization scores and in the meantime low scores according to control models:
 
-<object data="figures/median_scores.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="figures/median_scores.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://yoursite.com/the.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
-
-![alt text](figures/median_scores.pdf)
+![plot](readme_figures/median_scores.png)
 
 To explain those results, we looked at the agreement between optimization model and control models on the initial data distribution:
-![alt text](figures/original_datasets_analysis.pdf)
+![plot](readme_figures/original_datasets_analysis.png)
 
 We then assess whether this initial difference could explain the previous results:
-![alt text](figures/median_scores_start_dataset_data_control.pdf)
+![plot](readme_figures/median_scores_start_dataset_data_control.png)
 
 
 ## Code
