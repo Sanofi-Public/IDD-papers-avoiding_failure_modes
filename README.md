@@ -11,16 +11,19 @@ We thank the authors of <sup>1</sup> both for their very insightful work, and th
 
 ## Summary of the results
 
-Renz *and al* highlighted that in goal-directed generation, molecules generated can have high optimization scores and in the meantime low scores according to control models:
+Renz *and al* highlighted (among many other interesting results on generative models for molecules) that in goal-directed generation, molecules generated can have high optimization scores and in the meantime low scores according to control models:
 
 ![plot](readme_figures/median_scores.png)
 
 To explain those results, we looked at the agreement between optimization model and control models on the initial data distribution:
+
 ![plot](readme_figures/dataset_analysis.PNG)
 
 We then assess whether this initial difference could explain the previous results:
+
 ![plot](readme_figures/tolerance_intervals_data_control.PNG)
 
+The main conclusion of our work is that the underlying issue lies in the initial disagreement between optimization and control models, and not with the goal-directed generation algorithm. 
 
 ## Code
 The instructions for installation are the same as described in https://github.com/ml-jku/mgenerators-failure-modes.
