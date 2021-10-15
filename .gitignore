@@ -9,6 +9,8 @@ test*/
 default_model/
 run_goal_directed_additional.py
 guacamol_baselines_modified
+.fuse*
+figures/.fuse*
 #figures/
 *.swp
 20*

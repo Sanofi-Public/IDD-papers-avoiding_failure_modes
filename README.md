@@ -1,7 +1,7 @@
 # Explaining and avoiding failures modes in goal-directed generation
 
 This code reproduces the results found in the paper "Explaining and avoiding failures modes in goal-directed generation".
-The paper builds on the work of Renz and al <sup>1</sup>, that is available at: https://www.sciencedirect.com/science/article/pii/S1740674920300159
+The paper builds on the work of Renz *and al* <sup>1</sup>, that is available at: https://www.sciencedirect.com/science/article/pii/S1740674920300159
 
 This code is a fork from the repository supporting <sup>1</sup>. This code is available at: https://github.com/ml-jku/mgenerators-failure-modes. The main difference with the original codebase is new notebooks supporting our experiments.
 
@@ -9,6 +9,16 @@ We thank the authors of <sup>1</sup> both for their very insightful work, and th
 
 <sup>1</sup> https://doi.org/10.1016/j.ddtec.2020.09.003 
 
+## Summary of the results
+
+Renz *and al* highlighted that in goal-directed generation, molecules generated can have high optimization scores and in the meantime low scores according to control models:
+![alt text](figures/median_scores.pdf)
+
+To explain those results, we looked at the agreement between optimization model and control models on the initial data distribution:
+![alt text](figures/original_datasets_analysis.pdf)
+
+We then assess whether this initial difference could explain the previous results:
+![alt text](figures/median_scores_start_dataset_data_control.pdf)
 
 
 ## Code
@@ -16,8 +26,8 @@ The instructions for installation are the same as described in https://github.co
 
 ### Install dependencies
 ```
-conda env create -f environment.yml
-conda activate failure_modes
+pip install -r requirements.txt
+conda install rdkit -c rdkit
 ```
 
 ### Download Guacamol data splits
