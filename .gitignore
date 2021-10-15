@@ -2,7 +2,9 @@
 .idea/
 .ropeproject/
 .vscode/
+
 data/
+!cddd/data/
 results/
 old_stuff/
 test*/

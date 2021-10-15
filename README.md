@@ -32,6 +32,7 @@ The instructions for installation are the same as described in https://github.co
 ```
 pip install -r requirements.txt
 conda install rdkit -c rdkit
+wget https://raw.githubusercontent.com/jrwnter/cddd/master/download_default_model.sh -O- -q | bash
 ```
 
 ### Download Guacamol data splits
