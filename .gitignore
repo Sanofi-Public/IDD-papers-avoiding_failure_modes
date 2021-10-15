@@ -9,7 +9,7 @@ test*/
 default_model/
 run_goal_directed_additional.py
 guacamol_baselines_modified
-figures/
+#figures/
 *.swp
 20*
 # Byte-compiled / optimized / DLL files
