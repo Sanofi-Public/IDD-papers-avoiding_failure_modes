@@ -50,7 +50,7 @@ Running the `preprocess.py` script will transform the data into binary classific
 
 ## Experiments
 
-
+An alternative to running the experiments (which can take time) is to unzip the "results.zip" archive. Results from the paper can then be reproduced from there by running the different notebooks.
 1. To reproduce the original results presented in "On failure modes in molecule generation and optimization":
 ```
 python run_goal_directed.py --log_base results/original_start_chembl --nruns 10 --random_start 
