@@ -3,7 +3,8 @@
 This code reproduces the results found in the paper "Explaining and avoiding failures modes in goal-directed generation".
 The paper builds on the work of Renz *and al* <sup>1</sup>, that is available at: https://www.sciencedirect.com/science/article/pii/S1740674920300159
 
-This code is a fork from the repository supporting <sup>1</sup>. This code is available at: https://github.com/ml-jku/mgenerators-failure-modes. The main difference with the original codebase is new notebooks supporting our experiments.
+This code is a fork from the repository supporting <sup>1</sup>. This code is available at: https://github.com/ml-jku/mgenerators-failure-modes. The main difference with the original codebase is new notebooks supporting our experiments. 
+Another modification has been performed: the call to the GPL-ed library implementing the Levenshtein distance in addcarbon.py has been replaced by a function included in addcarbon.py.
 
 We thank the authors of <sup>1</sup> both for their very insightful work, and their well-written and reproducible codebase. 
 

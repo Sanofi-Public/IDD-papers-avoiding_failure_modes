@@ -7,7 +7,6 @@ import numpy as np
 from guacamol.assess_distribution_learning import assess_distribution_learning
 from guacamol.distribution_matching_generator import \
     DistributionMatchingGenerator
-from Levenshtein import distance
 from rdkit import Chem
 
 # save some sampled molecules
@@ -15,6 +14,21 @@ from utils import timestamp
 
 # from guacamol_baselines.random_smiles_sampler.distribution_learning import \
 # RandomSmilesSampler
+
+def levenshtein_distance(s1, s2):
+    if len(s1) > len(s2):
+        s1, s2 = s2, s1
+
+    distances = range(len(s1) + 1)
+    for i2, c2 in enumerate(s2):
+        distances_ = [i2+1]
+        for i1, c1 in enumerate(s1):
+            if c1 == c2:
+                distances_.append(distances[i1])
+            else:
+                distances_.append(1 + min((distances[i1], distances[i1 + 1], distances_[-1])))
+        distances = distances_
+    return distances[-1]
 
 
 class AddCarbonSampler(DistributionMatchingGenerator):
@@ -54,7 +68,7 @@ class AddCarbonSampler(DistributionMatchingGenerator):
 
                 # If it is valid compute canonical smiles and compare it to the original smiles
                 mut_can = Chem.MolToSmiles(mut_mol)
-                d = distance(orig_can, mut_can)
+                d = levenshtein_distance(orig_can, mut_can)
 
                 # find smiles with minimal levenshtein distance to original.
                 if (d < min_d) and (mut_can not in self.train_set):
